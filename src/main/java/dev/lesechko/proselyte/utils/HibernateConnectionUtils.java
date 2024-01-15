@@ -19,11 +19,6 @@ public class HibernateConnectionUtils {
         }
     }
 
-    // TODO: попробовать для listener-a в сервер?
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
     public static Session getNewSession() {
         return sessionFactory.openSession();
     }
