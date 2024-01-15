@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.lesechko.proselyte</groupId>
+    <artifactId>RestServletHiberCrud</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hibernate.version>6.4.0.Final</hibernate.version>
+        <mysql-cj.version>8.2.0</mysql-cj.version>
+        <flyway.version>10.2.0</flyway.version>
+        <tomcat9-maven-plugin.version>3.0.1</tomcat9-maven-plugin.version>
+    </properties>
+
+    <name>RestServletHiberCrud Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql-cj.version}</version>
+        </dependency>
+
+<!--        Flyway additional import maybe?-->
+<!--        <dependency>-->
+<!--            <groupId>org.flywaydb</groupId>-->
+<!--            <artifactId>flyway-mysql</artifactId>-->
+<!--            <version>${flyway.version}</version>-->
+<!--        </dependency>-->
+
+    </dependencies>
+    <build>
+        <finalName>RestServletHiberCrud</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.opoo.maven</groupId>
+                <artifactId>tomcat9-maven-plugin</artifactId>
+                <version>${tomcat9-maven-plugin.version}</version>
+                <configuration>
+                    <path>/</path>
+                    <port>8080</port>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <configuration>
+                    <url>jdbc:mysql://localhost/servlet_rest_crud</url>
+                    <user>root</user>
+                    <password>password</password>
+                    <locations>
+                        <location>filesystem:./src/main/resources/db/migration</location>
+                    </locations>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+</project>
