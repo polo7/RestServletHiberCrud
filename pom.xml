@@ -39,6 +39,7 @@
 <!--            <groupId>org.flywaydb</groupId>-->
 <!--            <artifactId>flyway-mysql</artifactId>-->
 <!--            <version>${flyway.version}</version>-->
+<!--            <scope>runtime</scope>-->
 <!--        </dependency>-->
 
     </dependencies>
