@@ -13,7 +13,7 @@ public class File {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "filePath")
+    @Column(name = "file_path")
     private String filePath;
 
     public File() {}

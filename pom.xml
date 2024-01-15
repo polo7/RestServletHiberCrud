@@ -15,11 +15,11 @@
         <mysql-cj.version>8.2.0</mysql-cj.version>
         <flyway.version>10.2.0</flyway.version>
         <tomcat9-maven-plugin.version>3.0.1</tomcat9-maven-plugin.version>
+        <jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
     </properties>
 
     <name>RestServletHiberCrud Maven Webapp</name>
     <url>http://maven.apache.org</url>
-
 
     <dependencies>
         <dependency>
@@ -39,6 +39,13 @@
             <artifactId>flyway-mysql</artifactId>
             <version>${flyway.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>${jakarta.servlet-api.version}</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
