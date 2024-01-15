@@ -1,7 +1,7 @@
 CREATE TABLE files (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR NOT NULL,
-    filePath VARCHAR NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    filePath VARCHAR(255) NOT NULL,
     PRIMARY KEY(id)
 );
 

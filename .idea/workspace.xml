@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="574821c1-d37b-4919-bbe4-d69f0139edf9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V0__Create_tables.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V0__Create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V0__Create_tables.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +43,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven.RestServletHiberCrud [compile].executor": "Run",
+    "Maven.RestServletHiberCrud [flyway:migrate].executor": "Run",
+    "Maven.RestServletHiberCrud [tomcat9:run].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -54,6 +56,8 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn compile" />
+      <command value="mvn flyway:migrate" />
+      <command value="mvn tomcat9:run" />
     </option>
   </component>
   <component name="SharedIndexes">
@@ -73,5 +77,10 @@
       <updated>1694356125112</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:com.google.protobuf:protobuf-java" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="maven-packaging:war" />
   </component>
 </project>

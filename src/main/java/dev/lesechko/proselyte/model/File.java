@@ -1,8 +1,19 @@
 package dev.lesechko.proselyte.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "files")
 public class File {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "filePath")
     private String filePath;
 
     public File() {}

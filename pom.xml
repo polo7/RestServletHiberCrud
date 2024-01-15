@@ -34,13 +34,12 @@
             <version>${mysql-cj.version}</version>
         </dependency>
 
-<!--        Flyway additional import maybe?-->
-<!--        <dependency>-->
-<!--            <groupId>org.flywaydb</groupId>-->
-<!--            <artifactId>flyway-mysql</artifactId>-->
-<!--            <version>${flyway.version}</version>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+            <version>${flyway.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
     </dependencies>
     <build>
@@ -70,6 +69,7 @@
                     </locations>
                 </configuration>
             </plugin>
+
         </plugins>
 
     </build>
