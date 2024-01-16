@@ -16,6 +16,7 @@
         <flyway.version>10.2.0</flyway.version>
         <tomcat9-maven-plugin.version>3.0.1</tomcat9-maven-plugin.version>
         <jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
+        <jackson.version>2.16.0</jackson.version>
     </properties>
 
     <name>RestServletHiberCrud Maven Webapp</name>
@@ -46,6 +47,12 @@
             <artifactId>jakarta.servlet-api</artifactId>
             <version>${jakarta.servlet-api.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
     </dependencies>
