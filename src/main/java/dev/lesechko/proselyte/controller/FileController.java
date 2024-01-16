@@ -47,8 +47,7 @@ public class FileController extends HttpServlet {
                     responseData.add(file);
                     resp.setStatus(200);
 //                    TODO: вопрос по условиям и логике работы
-//                    Добавить в обработку выше
-//                    String username = req.getParameter("user");
+//                    Добавить в обработку выше String username = req.getParameter("user");
 //                    Ищем в БД по имени пользователя
 //                    Если такого нет в списке, то отказываем в предоставлении файла
 //                    Если пользователь есть в списке, то предоставляем файл и добавляем скачивание этому пользователю
@@ -64,42 +63,9 @@ public class FileController extends HttpServlet {
                 resp.setStatus(400);
             }
 
-
-
-//            if (parameterId != null && !parameterId.isBlank()) {
-//                // Query has ID
-//                try {
-//                    Integer id = Integer.valueOf(req.getParameter("id"));
-//                    // At this step query has numerical ID
-//                    File file = fileService.getById(id);
-//                    if (file != null) {
-//                        responseData.add(file);
-//                    } else {
-//                        // DB has no data with this ID
-//                        responseData = null;
-//                    }
-//
-//                } catch (NumberFormatException e) {
-//                    // Query has incorrect ID
-//                    responseData = null;
-//                    resp.setStatus(400);
-//                }
-//            } else {
-//                // Some Query without ID
-//                responseData = null;
-//                resp.setStatus(400);
-//            }
-
-
         }
-        resp.setStatus(200);
 
-//        File file = new File(777, "Readme.txt", "/path/to/file");
-        File file = new File("Readme.txt", "/path/to/file");
-//        String jsonResponse = new ObjectMapper().writeValueAsString(file);
-
-        List<File> tmp = null;
-        String jsonResponse = new ObjectMapper().writeValueAsString(tmp);
+        String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
         PrintWriter messageWriter = resp.getWriter();
         messageWriter.write(jsonResponse);
     }
