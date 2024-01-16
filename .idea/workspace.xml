@@ -7,6 +7,8 @@
     <list default="true" id="574821c1-d37b-4919-bbe4-d69f0139edf9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/FileService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

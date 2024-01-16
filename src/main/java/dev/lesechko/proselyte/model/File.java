@@ -23,6 +23,12 @@ public class File {
         this.filePath = filePath;
     }
 
+//    public File(Integer id, String name, String filePath) {
+//        this.id = id;
+//        this.name = name;
+//        this.filePath = filePath;
+//    }
+
     public Integer getId() {
         return id;
     }
