@@ -10,10 +10,18 @@ import java.util.Arrays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.lesechko.proselyte.model.File;
+import dev.lesechko.proselyte.service.FileService;
 
 public class FileController extends HttpServlet {
+    private final FileService fileService = new FileService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        Если айди не указан, то гетАлл. Если указан - гетБайАйди.
+//        fileService.getById(Integer id);
+//        fileService.getAll();
+//        И так далее по разным видам запросов обращаемся к разным методам.
+
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json; charset=UTF-8");
         resp.setStatus(200);
