@@ -19,38 +19,80 @@ public class FileController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json; charset=UTF-8");
         List<File> responseData = new ArrayList<>();
         String requestQuery = req.getQueryString();
-        Integer id = 777;
-        if (requestQuery == null || requestQuery.isEmpty()) {
-            System.out.println("No query. Get list of all files");
+
+        if (requestQuery == null || requestQuery.isBlank()) {
+            // No query. Display all items
             List<File> files = fileService.getAll();
             if (files != null && !files.isEmpty()) {
                 responseData.addAll(files);
             }
+            resp.setStatus(200);
         } else {
-            System.out.println("we have a query and it needs to be processed");
-            File file = fileService.getById(id);
-//            Если такого айди нет, то надо вернуть нулл. Поставить это в респонсДата.
-            if (file != null) {
-                responseData.add(file);
-            } else {
+            // Some query is present
+            String parameterId = req.getParameter("id");
+            try {
+                // TODO: вопрос про try vs if
+                // Это ОК так управлять ходом программы?
+                // Или надо было несколько IF вписать на проверку наличия id и проверку на число?
+                // Читал мнение в Инете, что нехорошо через try подменять работу if, но так вышло на 1 else короче
+
+                Integer id = Integer.valueOf(parameterId);
+                // At this step query has numerical ID
+                File file = fileService.getById(id);
+                if (file != null) {
+                    responseData.add(file);
+                    resp.setStatus(200);
+//                    TODO: вопрос по условиям и логике работы
+//                    Добавить в обработку выше
+//                    String username = req.getParameter("user");
+//                    Ищем в БД по имени пользователя
+//                    Если такого нет в списке, то отказываем в предоставлении файла
+//                    Если пользователь есть в списке, то предоставляем файл и добавляем скачивание этому пользователю
+//                    Такой смысл?
+                } else {
+                    // DB has no entry with this ID
+                    responseData = null;
+                    resp.setStatus(400);
+                }
+            } catch (NumberFormatException e) {
+                // Query has incorrect ID or no ID
                 responseData = null;
+                resp.setStatus(400);
             }
+
+
+
+//            if (parameterId != null && !parameterId.isBlank()) {
+//                // Query has ID
+//                try {
+//                    Integer id = Integer.valueOf(req.getParameter("id"));
+//                    // At this step query has numerical ID
+//                    File file = fileService.getById(id);
+//                    if (file != null) {
+//                        responseData.add(file);
+//                    } else {
+//                        // DB has no data with this ID
+//                        responseData = null;
+//                    }
+//
+//                } catch (NumberFormatException e) {
+//                    // Query has incorrect ID
+//                    responseData = null;
+//                    resp.setStatus(400);
+//                }
+//            } else {
+//                // Some Query without ID
+//                responseData = null;
+//                resp.setStatus(400);
+//            }
+
+
         }
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("application/json; charset=UTF-8");
         resp.setStatus(200);
-        System.out.println(req.getParameter("name"));
-        System.out.println(req.getParameter("path"));
-        System.out.println(req.getParameter("user"));
-        System.out.println(req.getRequestURI());
-        System.out.println(req.getRequestURL());
-        System.out.println(req.getQueryString());
-//        messageWriter.println("<h1>TEST</h1>");
-//        messageWriter.println(req.getRequestURI());
-//        messageWriter.println(req.getRequestURI().split("/"));
-//        messageWriter.println(Arrays.toString(req.getRequestURI().split("/")));
 
 //        File file = new File(777, "Readme.txt", "/path/to/file");
         File file = new File("Readme.txt", "/path/to/file");
