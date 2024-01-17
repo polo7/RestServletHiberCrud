@@ -13,6 +13,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.lesechko.proselyte.model.File;
 import dev.lesechko.proselyte.service.FileService;
 
+// GET
+// /api/v1/files - list all files
+// /api/v1/files?id={id} - get file by ID
+
+// POST
+// /api/v1/files?name={name}&path={path} - create new file {name} with path {path}
+
+// DELETE
+// /api/v1/files?id={id} - deletes file by id
+
+// PUT
+// /api/v1/files?id={id}&name={new_filename}&path={new_filepath} - updates file by id with
+
 public class FileRestController extends HttpServlet {
     private final String ENCODING = "UTF-8";
     private final String CONTENT_TYPE = "application/json; charset=" + ENCODING;
@@ -20,6 +33,9 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // /api/v1/files - list all files
+        // /api/v1/files?id={id} - get file by ID
+
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
@@ -73,6 +89,8 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // /api/v1/files?name={name}&path={path} - create new file {name} with path {path}
+
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
@@ -111,6 +129,8 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // /api/v1/files?id={id} - deletes file by id
+
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         Boolean responseData = false;
@@ -144,6 +164,8 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // /api/v1/files?id={id}&name={new_filename}&path={new_filepath} - updates file by id with
+
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
