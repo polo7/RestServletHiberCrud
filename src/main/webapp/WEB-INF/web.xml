@@ -6,12 +6,12 @@
     <display-name>RestServletHiberCrud</display-name>
 
     <servlet>
-        <servlet-name>FileController</servlet-name>
-        <servlet-class>dev.lesechko.proselyte.controller.FileController</servlet-class>
+        <servlet-name>FileRestController</servlet-name>
+        <servlet-class>dev.lesechko.proselyte.controller.FileRestController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>FileController</servlet-name>
+        <servlet-name>FileRestController</servlet-name>
         <url-pattern>/api/v1/files/*</url-pattern>
     </servlet-mapping>
 
