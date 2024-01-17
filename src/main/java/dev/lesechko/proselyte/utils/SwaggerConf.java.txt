@@ -1,0 +1,33 @@
+package dev.lesechko.proselyte.utils;
+
+import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
+import io.swagger.v3.oas.integration.OpenApiConfigurationException;
+import io.swagger.v3.oas.integration.api.OpenAPIConfiguration;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+
+public class SwaggerConf extends HttpServlet {
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        OpenAPI oas = new OpenAPI().info(new Info()
+                .title("Servlet REST CRUD App API")
+                .description("Test description")
+                .version("1.0"));
+
+        try {
+            new JaxrsOpenApiContextBuilder<>()
+                    .servletConfig(config)
+                    .application(null)
+                    .openApiConfiguration((OpenAPIConfiguration) oas)
+                    .buildContext(true);
+        } catch (OpenApiConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

@@ -10,9 +10,19 @@
         <servlet-class>dev.lesechko.proselyte.controller.FileRestController</servlet-class>
     </servlet>
 
+<!--    <servlet>-->
+<!--        <servlet-name>SwaggerConf</servlet-name>-->
+<!--        <servlet-class>dev.lesechko.proselyte.utils.SwaggerConf</servlet-class>-->
+<!--    </servlet>-->
+
     <servlet-mapping>
         <servlet-name>FileRestController</servlet-name>
         <url-pattern>/api/v1/files/*</url-pattern>
     </servlet-mapping>
+
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>SwaggerConf</servlet-name>-->
+<!--        <url-pattern>/api/v1/swagger-ui</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 </web-app>
