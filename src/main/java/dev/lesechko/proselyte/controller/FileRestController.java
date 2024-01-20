@@ -1,5 +1,6 @@
 package dev.lesechko.proselyte.controller;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,10 @@ import dev.lesechko.proselyte.service.FileService;
 // PUT
 // /api/v1/files?id={id}&name={new_filename}&path={new_filepath} - updates file by id with
 
+@WebServlet(
+        name = "FileRestController",
+        urlPatterns = {"/api/v1/files"}
+)
 public class FileRestController extends HttpServlet {
     private final String ENCODING = "UTF-8";
     private final String CONTENT_TYPE = "application/json; charset=" + ENCODING;

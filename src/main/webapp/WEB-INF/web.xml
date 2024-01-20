@@ -5,14 +5,14 @@
 <web-app>
     <display-name>RestServletHiberCrud</display-name>
 
-    <servlet>
-        <servlet-name>FileRestController</servlet-name>
-        <servlet-class>dev.lesechko.proselyte.controller.FileRestController</servlet-class>
-    </servlet>
+<!--    <servlet>-->
+<!--        <servlet-name>FileRestController</servlet-name>-->
+<!--        <servlet-class>dev.lesechko.proselyte.controller.FileRestController</servlet-class>-->
+<!--    </servlet>-->
 
-    <servlet-mapping>
-        <servlet-name>FileRestController</servlet-name>
-        <url-pattern>/api/v1/files/*</url-pattern>
-    </servlet-mapping>
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>FileRestController</servlet-name>-->
+<!--        <url-pattern>/api/v1/files/*</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 </web-app>

@@ -1,5 +1,6 @@
 package dev.lesechko.proselyte.repository.hibernate;
 
+import dev.lesechko.proselyte.model.Status;
 import dev.lesechko.proselyte.utils.HibernateConnectionUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,12 +22,12 @@ public class HibernateFileRepositoryImpl implements FileRepository {
     public List<File> getAll() {
         Transaction transaction = null;
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            transaction = session.beginTransaction();
+            //transaction = session.beginTransaction();
             List<File> files = session.createQuery("FROM File", File.class).list();
-            transaction.commit();
+            //transaction.commit();
             return files;
         } catch (Exception e) {
-            rollbackTransaction(transaction);
+            //rollbackTransaction(transaction);
             e.printStackTrace();
             return null;
         }
@@ -36,12 +37,12 @@ public class HibernateFileRepositoryImpl implements FileRepository {
     public File getById(Integer id) {
         Transaction transaction = null;
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            transaction = session.beginTransaction();
+            //transaction = session.beginTransaction();
             File file = session.get(File.class, id);
-            transaction.commit();
+            //transaction.commit();
             return file;
         } catch (Exception e) {
-            rollbackTransaction(transaction);
+            //rollbackTransaction(transaction);
             e.printStackTrace();
             return null;
         }
@@ -83,11 +84,14 @@ public class HibernateFileRepositoryImpl implements FileRepository {
         try (Session session = HibernateConnectionUtils.getNewSession()) {
             transaction = session.beginTransaction();
             File file = session.get(File.class, id);
+            file.setStatus(Status.DELETED);
             if (file == null) {
-                transaction.commit();
-                return false;
+                throw new Exception("ID is not found. Nothing to delete.");
+//                transaction.commit();
+//                return false;
             }
-            session.remove(file);
+//            session.remove(file);
+            session.merge(file);
             transaction.commit();
             return true;
         } catch (Exception e) {
