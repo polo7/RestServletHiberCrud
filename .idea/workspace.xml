@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="574821c1-d37b-4919-bbe4-d69f0139edf9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateFileRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateFileRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V0__Create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V0__Create_tables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

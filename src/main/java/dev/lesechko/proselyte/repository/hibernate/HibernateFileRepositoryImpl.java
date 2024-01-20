@@ -1,14 +1,15 @@
 package dev.lesechko.proselyte.repository.hibernate;
 
-import dev.lesechko.proselyte.model.Status;
-import dev.lesechko.proselyte.utils.HibernateConnectionUtils;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import dev.lesechko.proselyte.model.File;
+import dev.lesechko.proselyte.model.Status;
 import dev.lesechko.proselyte.repository.FileRepository;
+import dev.lesechko.proselyte.utils.HibernateConnectionUtils;
 
-import java.util.List;
 
 public class HibernateFileRepositoryImpl implements FileRepository {
     private void rollbackTransaction(Transaction t) {
@@ -20,14 +21,9 @@ public class HibernateFileRepositoryImpl implements FileRepository {
 
     @Override
     public List<File> getAll() {
-        Transaction transaction = null;
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            //transaction = session.beginTransaction();
-            List<File> files = session.createQuery("FROM File", File.class).list();
-            //transaction.commit();
-            return files;
+            return session.createQuery("FROM File", File.class).list();
         } catch (Exception e) {
-            //rollbackTransaction(transaction);
             e.printStackTrace();
             return null;
         }
@@ -35,14 +31,9 @@ public class HibernateFileRepositoryImpl implements FileRepository {
 
     @Override
     public File getById(Integer id) {
-        Transaction transaction = null;
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            //transaction = session.beginTransaction();
-            File file = session.get(File.class, id);
-            //transaction.commit();
-            return file;
+            return session.get(File.class, id);
         } catch (Exception e) {
-            //rollbackTransaction(transaction);
             e.printStackTrace();
             return null;
         }
