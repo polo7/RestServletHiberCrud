@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Project Specific ###
+# This folder is a file storage for this project. We don't want actual files to commited to Git.
+src/main/resources/uploads/
