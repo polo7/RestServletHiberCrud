@@ -44,6 +44,10 @@ public class FileRestController extends HttpServlet {
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
+        String pathInfo = req.getPathInfo();
+
+
+
         String requestQuery = req.getQueryString();
 
         if (requestQuery == null || requestQuery.isBlank()) {
