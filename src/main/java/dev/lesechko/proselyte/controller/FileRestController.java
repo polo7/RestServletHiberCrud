@@ -57,23 +57,12 @@ public class FileRestController extends HttpServlet {
             // Some query is present
             String parameterId = req.getParameter("id");
             try {
-                // TODO: вопрос про try vs if
-                // Это ОК так управлять ходом программы?
-                // Или надо было несколько IF вписать на проверку наличия id и проверку на число?
-                // Читал мнение в Инете, что нехорошо через try подменять работу if, но так вышло на 1 else короче
-
                 Integer id = Integer.valueOf(parameterId);
                 // At this step query has numerical ID
                 File file = fileService.getById(id);
                 if (file != null) {
                     responseData.add(file);
                     resp.setStatus(200);
-//                    TODO: вопрос по условиям и логике работы
-//                    Добавить в обработку выше String username = req.getParameter("user");
-//                    Ищем в БД по имени пользователя
-//                    Если такого нет в списке, то отказываем в предоставлении файла
-//                    Если пользователь есть в списке, то предоставляем файл и добавляем скачивание этому пользователю
-//                    Такой смысл?
                 } else {
                     // DB has no entry with this ID
                     responseData = null;
