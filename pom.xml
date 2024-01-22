@@ -12,7 +12,8 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Dependicies' versions -->
+        <!-- Dependencies' versions -->
+        <commons-fileupload.version>1.5</commons-fileupload.version>
         <flyway.version>10.2.0</flyway.version>
         <hibernate.version>6.4.0.Final</hibernate.version>
         <jackson.version>2.16.0</jackson.version>
@@ -26,6 +27,12 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons-fileupload.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>

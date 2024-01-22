@@ -1,22 +1,29 @@
 package dev.lesechko.proselyte.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dev.lesechko.proselyte.model.File;
 import dev.lesechko.proselyte.service.FileService;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 // GET
-// /api/v1/files - list all files
-// /api/v1/files?id={id} - get file by ID
+// /api/v1/file - display all files
+// /api/v1/file/{id} - get file by ID
 
 // POST
 // /api/v1/files?name={name}&path={path} - create new file {name} with path {path}
@@ -29,55 +36,59 @@ import dev.lesechko.proselyte.service.FileService;
 
 @WebServlet(
         name = "FileRestController",
-        urlPatterns = {"/api/v1/files"}
+        urlPatterns = {"/api/v1/files/*"}
 )
 public class FileRestController extends HttpServlet {
     private final String ENCODING = "UTF-8";
     private final String CONTENT_TYPE = "application/json; charset=" + ENCODING;
+    private final String FILE_STORAGE_PATH = "./src/main/resources/uploads/";
+    private final int MEM_MAX_SIZE = 10_000 * 1024; // disk space = 10 Mb
+    private final int FILE_MAX_SIZE = 1_000 * 1024; // file size = 1 Mb
+
     private final FileService fileService = new FileService();
+
+    private Integer extractIdFromPath(String pathInfo) {
+        if (pathInfo == null || pathInfo.isBlank()) {
+            return null;
+        }
+        String[] pathParams = pathInfo.split("/");
+        if (pathParams.length != 2) {
+            return null;
+        }
+        try {
+            return Integer.valueOf(pathParams[1]);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // /api/v1/files - list all files
-        // /api/v1/files?id={id} - get file by ID
-
+        // /api/v1/file - display all files
+        // /api/v1/file/{id} - get file by ID
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
         String pathInfo = req.getPathInfo();
 
-
-
-        String requestQuery = req.getQueryString();
-
-        if (requestQuery == null || requestQuery.isBlank()) {
-            // No query. Display all items
+        if (pathInfo == null || "/".equals(pathInfo)) {
+            // Just "/files" w/o parameters - display all files
             List<File> files = fileService.getAll();
             if (files != null && !files.isEmpty()) {
                 responseData.addAll(files);
             }
             resp.setStatus(200);
         } else {
-            // Some query is present
-            String parameterId = req.getParameter("id");
-            try {
-                Integer id = Integer.valueOf(parameterId);
-                // At this step query has numerical ID
-                File file = fileService.getById(id);
-                if (file != null) {
-                    responseData.add(file);
-                    resp.setStatus(200);
-                } else {
-                    // DB has no entry with this ID
-                    responseData = null;
-                    resp.setStatus(400);
-                }
-            } catch (NumberFormatException e) {
-                // Query has incorrect ID or no ID
+            Integer id = extractIdFromPath(pathInfo);
+            File file = fileService.getById(id);
+            if (file != null) {
+                responseData.add(file);
+                resp.setStatus(200);
+            } else {
+                // DB has no entry with this ID
                 responseData = null;
                 resp.setStatus(400);
             }
-
         }
 
         String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
@@ -88,41 +99,84 @@ public class FileRestController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // /api/v1/files?name={name}&path={path} - create new file {name} with path {path}
-
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
+        PrintWriter message = resp.getWriter();
         List<File> responseData = new ArrayList<>();
-        String requestQuery = req.getQueryString();
-        if (requestQuery != null && !requestQuery.isBlank()) {
-            String fileName = req.getParameter("name");
-            String filePath = req.getParameter("path");
 
-            if (fileName != null && !fileName.isBlank()
-                    && filePath != null && !filePath.isBlank()) {
-                File fileToSave = new File(fileName, filePath);
-                File fileSaved = fileService.save(fileToSave);
+        String pathInfo = req.getPathInfo();
 
-                if (fileSaved != null) {
-                    responseData.add(fileSaved);
-                    resp.setStatus(201);
-                } else {
-                    // Something went wrong while saving. Our side.
-                    responseData = null;
-                    resp.setStatus(500);
+        if (pathInfo == null || "/".equals(pathInfo)) {
+            // POST /files is the only point to upload files
+            DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
+            diskFileItemFactory.setRepository(new java.io.File(FILE_STORAGE_PATH));
+            diskFileItemFactory.setSizeThreshold(MEM_MAX_SIZE);
+
+            ServletFileUpload upload = new ServletFileUpload(diskFileItemFactory);
+            upload.setSizeMax(FILE_MAX_SIZE);
+
+            try {
+                List<FileItem> fileItems = upload.parseRequest(req);
+                System.out.println("File items:" + fileItems);
+                Iterator<FileItem> iterator = fileItems.iterator();
+                while (iterator.hasNext()) { //TODO: examine content of Iterator. What is inside of it? While loops only 1 time!
+                    System.out.println("Step while");
+                    FileItem fileItem = (FileItem)iterator.next();
+                    String fileName = fileItem.getName();
+                    System.out.println(fileName);
+                    //TODO: finish file uploading routine
+                    resp.setStatus(200);
+                    message.println(fileName);
                 }
-            } else {
-                // Query is incorrect (epmty values)
+
+            } catch (Exception e) {
                 responseData = null;
                 resp.setStatus(400);
+                e.printStackTrace();
             }
+            // accept file
+            // get filename
+            // create new File()
+            // add file into DB
+            // return JSON of newly added file
         } else {
-            // No query - nothing to add
             responseData = null;
             resp.setStatus(400);
         }
-        String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
-        PrintWriter message = resp.getWriter();
-        message.write(jsonResponse);
+
+
+//
+//        String requestQuery = req.getQueryString();
+//        if (requestQuery != null && !requestQuery.isBlank()) {
+//            String fileName = req.getParameter("name");
+//            String filePath = req.getParameter("path");
+//
+//            if (fileName != null && !fileName.isBlank()
+//                    && filePath != null && !filePath.isBlank()) {
+//                File fileToSave = new File(fileName, filePath);
+//                File fileSaved = fileService.save(fileToSave);
+//
+//                if (fileSaved != null) {
+//                    responseData.add(fileSaved);
+//                    resp.setStatus(201);
+//                } else {
+//                    // Something went wrong while saving. Our side.
+//                    responseData = null;
+//                    resp.setStatus(500);
+//                }
+//            } else {
+//                // Query is incorrect (epmty values)
+//                responseData = null;
+//                resp.setStatus(400);
+//            }
+//        } else {
+//            // No query - nothing to add
+//            responseData = null;
+//            resp.setStatus(400);
+//        }
+//        String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
+//        PrintWriter message = resp.getWriter();
+//        message.write(jsonResponse);
     }
 
     @Override
