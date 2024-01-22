@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="574821c1-d37b-4919-bbe4-d69f0139edf9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
