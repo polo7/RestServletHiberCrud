@@ -2,6 +2,8 @@ package dev.lesechko.proselyte.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +28,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 // /api/v1/file/{id} - get file by ID
 
 // POST
-// /api/v1/files?name={name}&path={path} - create new file {name} with path {path}
+// /api/v1/files - create new file via POSTing a real file to this endpont
 
 // DELETE
 // /api/v1/files?id={id} - deletes file by id
@@ -60,6 +62,11 @@ public class FileRestController extends HttpServlet {
         } catch (NumberFormatException e) {
             return null;
         }
+    }
+
+    private String approveFileName(String path, String fileName) {
+        while (Files.exists(Path.of(path, fileName))) fileName = "Copy " + fileName;
+        return fileName;
     }
 
     @Override
@@ -98,10 +105,10 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // /api/v1/files?name={name}&path={path} - create new file {name} with path {path}
+        // /api/v1/files - create new file via POSTing a real file to this endpont
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
-        PrintWriter message = resp.getWriter();
+        //PrintWriter message = resp.getWriter();
         List<File> responseData = new ArrayList<>();
 
         String pathInfo = req.getPathInfo();
@@ -117,66 +124,40 @@ public class FileRestController extends HttpServlet {
 
             try {
                 List<FileItem> fileItems = upload.parseRequest(req);
-                System.out.println("File items:" + fileItems);
                 Iterator<FileItem> iterator = fileItems.iterator();
-                while (iterator.hasNext()) { //TODO: examine content of Iterator. What is inside of it? While loops only 1 time!
-                    System.out.println("Step while");
-                    FileItem fileItem = (FileItem)iterator.next();
-                    String fileName = fileItem.getName();
-                    System.out.println(fileName);
-                    //TODO: finish file uploading routine
-                    resp.setStatus(200);
-                    message.println(fileName);
-                }
 
+                while (iterator.hasNext()) { //TODO Q: Is Iterator for multipart? WHILE loops only 1 time now!
+                    FileItem fileItem = iterator.next();
+                    String fileName = fileItem.getName();
+                    // write on disk
+                    fileName = approveFileName(FILE_STORAGE_PATH, fileName);
+                    java.io.File fileOnDisk = new java.io.File(FILE_STORAGE_PATH + fileName);
+                    fileItem.write(fileOnDisk);
+                    // insert into DB
+                    File fileToSave = new File(fileName, FILE_STORAGE_PATH);
+                    File fileSaved = fileService.save(fileToSave);
+                    if (fileSaved != null) {
+                        responseData.add(fileSaved);
+                        resp.setStatus(201);
+                    } else {
+                        // Something went wrong while saving to DB. Our side.
+                        responseData = null;
+                        resp.setStatus(503);
+                    }
+                }
             } catch (Exception e) {
                 responseData = null;
                 resp.setStatus(400);
                 e.printStackTrace();
             }
-            // accept file
-            // get filename
-            // create new File()
-            // add file into DB
-            // return JSON of newly added file
         } else {
+            // Excessive path/params
             responseData = null;
             resp.setStatus(400);
         }
-
-
-//
-//        String requestQuery = req.getQueryString();
-//        if (requestQuery != null && !requestQuery.isBlank()) {
-//            String fileName = req.getParameter("name");
-//            String filePath = req.getParameter("path");
-//
-//            if (fileName != null && !fileName.isBlank()
-//                    && filePath != null && !filePath.isBlank()) {
-//                File fileToSave = new File(fileName, filePath);
-//                File fileSaved = fileService.save(fileToSave);
-//
-//                if (fileSaved != null) {
-//                    responseData.add(fileSaved);
-//                    resp.setStatus(201);
-//                } else {
-//                    // Something went wrong while saving. Our side.
-//                    responseData = null;
-//                    resp.setStatus(500);
-//                }
-//            } else {
-//                // Query is incorrect (epmty values)
-//                responseData = null;
-//                resp.setStatus(400);
-//            }
-//        } else {
-//            // No query - nothing to add
-//            responseData = null;
-//            resp.setStatus(400);
-//        }
-//        String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
-//        PrintWriter message = resp.getWriter();
-//        message.write(jsonResponse);
+        String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
+        PrintWriter message = resp.getWriter();
+        message.write(jsonResponse);
     }
 
     @Override
