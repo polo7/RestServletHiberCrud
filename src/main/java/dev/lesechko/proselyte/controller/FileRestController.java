@@ -72,7 +72,8 @@ public class FileRestController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // /api/v1/file - display all files
-        // /api/v1/file/{id} - get file by ID
+        // /api/v1/file/{id} - get JSON-file by ID
+        // TODO: /api/v1/file/{id}/download - get file by ID ????????
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();

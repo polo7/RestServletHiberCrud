@@ -22,7 +22,7 @@ public class AuthFilterController implements Filter {
         String userName = req.getHeader("User-Name");
         if (userName == null || userName.isBlank()) {
             resp.sendError(401, AUTH_ERROR_MESSAGE);
-        } else if (true) {
+       // } else if (true) {
             // check if username is in the DB
             // if not - send error
         } else {
