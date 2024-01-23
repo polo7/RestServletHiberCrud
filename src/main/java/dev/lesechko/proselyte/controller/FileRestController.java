@@ -86,6 +86,13 @@ public class FileRestController extends HttpServlet {
             }
             resp.setStatus(200);
         } else {
+            // TODO: выгрузка файла пользователю
+            // запросили по ID
+            // найти файл в БД (+ с учетом юзера тоже в БД)
+            // внести в эвент
+            // отправить пользователю файл (это в теле ответа вместо json будет?)
+            // json допом можно передать?
+            
             Integer id = extractIdFromPath(pathInfo);
             File file = fileService.getById(id);
             if (file != null) {
