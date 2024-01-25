@@ -25,7 +25,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 // GET
 // /api/v1/file - display all files
-// /api/v1/file/{id} - get file by ID
+// /api/v1/file/{id} - get JSON file by ID
+// /api/v1/file/{id}/download - get file by ID ?????
 
 // POST
 // /api/v1/files - create new file via POSTing a real file to this endpont
@@ -171,10 +172,15 @@ public class FileRestController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // /api/v1/files?id={id} - deletes file by id
+        // /api/v1/file/{id} - set STATUS DELETED for file by ID
 
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         Boolean responseData = false;
+        //TODO: implement similar to toGet() by id.
+        String pathInfo = req.getPathInfo();
+
+
         String requestQuery = req.getQueryString();
         if (requestQuery != null && !requestQuery.isBlank()) {
             String parameterId = req.getParameter("id");
