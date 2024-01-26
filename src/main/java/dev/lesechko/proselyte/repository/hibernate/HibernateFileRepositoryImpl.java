@@ -75,13 +75,10 @@ public class HibernateFileRepositoryImpl implements FileRepository {
         try (Session session = HibernateConnectionUtils.getNewSession()) {
             transaction = session.beginTransaction();
             File file = session.get(File.class, id);
-            file.setStatus(Status.DELETED);
             if (file == null) {
                 throw new Exception("ID is not found. Nothing to delete.");
-//                transaction.commit();
-//                return false;
             }
-//            session.remove(file);
+            file.setStatus(Status.DELETED);
             session.merge(file);
             transaction.commit();
             return true;

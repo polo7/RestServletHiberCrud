@@ -24,15 +24,14 @@ import dev.lesechko.proselyte.service.FileService;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 // GET
-// /api/v1/file - display all files
-// /api/v1/file/{id} - get JSON file by ID
-// /api/v1/file/{id}/download - get file by ID ?????
+// /api/v1/files - display all files
+// /api/v1/files/{id} - get JSON file by ID
 
 // POST
 // /api/v1/files - create new file via POSTing a real file to this endpont
 
 // DELETE
-// /api/v1/files?id={id} - deletes file by id
+// /api/v1/files/{id} - deletes file by id
 
 // PUT
 // /api/v1/files?id={id}&name={new_filename}&path={new_filepath} - updates file by id with
@@ -74,7 +73,6 @@ public class FileRestController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // /api/v1/file - display all files
         // /api/v1/file/{id} - get JSON-file by ID
-        // TODO: /api/v1/file/{id}/download - get file by ID ????????
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
@@ -88,13 +86,6 @@ public class FileRestController extends HttpServlet {
             }
             resp.setStatus(200);
         } else {
-            // TODO: выгрузка файла пользователю
-            // запросили по ID
-            // найти файл в БД (+ с учетом юзера тоже в БД)
-            // внести в эвент
-            // отправить пользователю файл (это в теле ответа вместо json будет?)
-            // json допом можно передать?
-            
             Integer id = extractIdFromPath(pathInfo);
             File file = fileService.getById(id);
             if (file != null) {
@@ -117,9 +108,7 @@ public class FileRestController extends HttpServlet {
         // /api/v1/files - create new file via POSTing a real file to this endpont
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
-        //PrintWriter message = resp.getWriter();
         List<File> responseData = new ArrayList<>();
-
         String pathInfo = req.getPathInfo();
 
         if (pathInfo == null || "/".equals(pathInfo)) {
@@ -135,13 +124,15 @@ public class FileRestController extends HttpServlet {
                 List<FileItem> fileItems = upload.parseRequest(req);
                 Iterator<FileItem> iterator = fileItems.iterator();
 
-                while (iterator.hasNext()) { //TODO Q: Is Iterator for multipart? WHILE loops only 1 time now!
+                while (iterator.hasNext()) {
                     FileItem fileItem = iterator.next();
                     String fileName = fileItem.getName();
+
                     // write on disk
                     fileName = approveFileName(FILE_STORAGE_PATH, fileName);
                     java.io.File fileOnDisk = new java.io.File(FILE_STORAGE_PATH + fileName);
                     fileItem.write(fileOnDisk);
+
                     // insert into DB
                     File fileToSave = new File(fileName, FILE_STORAGE_PATH);
                     File fileSaved = fileService.save(fileToSave);
@@ -150,6 +141,10 @@ public class FileRestController extends HttpServlet {
                         resp.setStatus(201);
                     } else {
                         // Something went wrong while saving to DB. Our side.
+                        if (fileOnDisk.exists()) {
+                            fileOnDisk.delete();
+                        }
+                        fileItem.delete();
                         responseData = null;
                         resp.setStatus(503);
                     }
@@ -171,38 +166,26 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // /api/v1/files?id={id} - deletes file by id
         // /api/v1/file/{id} - set STATUS DELETED for file by ID
-
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         Boolean responseData = false;
-        //TODO: implement similar to toGet() by id.
         String pathInfo = req.getPathInfo();
 
-
-        String requestQuery = req.getQueryString();
-        if (requestQuery != null && !requestQuery.isBlank()) {
-            String parameterId = req.getParameter("id");
-            try {
-                Integer id = Integer.valueOf(parameterId);
-                if (fileService.deleteById(id)) {
-                    responseData = true;
-                    resp.setStatus(200);
-                } else {
-                    responseData = false;
-                    resp.setStatus(200);
-                }
-            } catch (NumberFormatException e) {
-                // Query has incorrect ID or no ID
-                responseData = null;
-                resp.setStatus(400);
-            }
-
-        } else {
-            // No query - nothing to delete
+        if (pathInfo == null || "/".equals(pathInfo)) {
+            // No ID in request
             responseData = null;
             resp.setStatus(400);
+        } else {
+            Integer id = extractIdFromPath(pathInfo);
+            File fileToDelete = fileService.getById(id);
+            if (fileService.deleteById(id)) {
+                responseData = true;
+                resp.setStatus(200);
+            } else {
+                responseData = false;
+                resp.setStatus(200);
+            }
         }
         String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
         PrintWriter message = resp.getWriter();
@@ -211,8 +194,7 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // /api/v1/files?id={id}&name={new_filename}&path={new_filepath} - updates file by id with
-
+        // /api/v1/files/{id}/{new_filename} - updates file by id with
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
