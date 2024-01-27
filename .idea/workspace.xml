@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="574821c1-d37b-4919-bbe4-d69f0139edf9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/AuthFilterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/AuthFilterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateFileRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateFileRepositoryImpl.java" afterDir="false" />
     </list>
@@ -67,8 +66,8 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn compile" />
-      <command value="mvn tomcat9:run" />
       <command value="mvn flyway:migrate" />
+      <command value="mvn tomcat9:run" />
     </option>
   </component>
   <component name="SharedIndexes">

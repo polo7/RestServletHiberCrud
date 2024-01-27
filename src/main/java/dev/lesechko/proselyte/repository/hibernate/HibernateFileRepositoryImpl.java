@@ -19,6 +19,15 @@ public class HibernateFileRepositoryImpl implements FileRepository {
         }
     }
 
+    private boolean hasValidVlues(File file) {
+        if (file.getName() == null ||  file.getName().isBlank()
+            || file.getFilePath() == null || file.getFilePath() == null
+            || file.getStatus() == null) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public List<File> getAll() {
         try (Session session = HibernateConnectionUtils.getNewSession()) {
@@ -41,8 +50,14 @@ public class HibernateFileRepositoryImpl implements FileRepository {
 
     @Override
     public File save(File file) {
+        if (file == null) {
+            return null;
+        }
         Transaction transaction = null;
         try (Session session = HibernateConnectionUtils.getNewSession()) {
+            if (!hasValidVlues(file)) {
+                throw new Exception("Incorrect field values");
+            }
             transaction = session.beginTransaction();
             session.persist(file);
             transaction.commit();
@@ -56,8 +71,17 @@ public class HibernateFileRepositoryImpl implements FileRepository {
 
     @Override
     public File update(File file) {
+        if (file == null) {
+            return null;
+        }
         Transaction transaction = null;
         try (Session session = HibernateConnectionUtils.getNewSession()) {
+            if (session.get(File.class, file.getId()) == null) {
+                throw new Exception("ID is not found. Nothing to update");
+            }
+            if (!hasValidVlues(file)) {
+                throw new Exception("Incorrect field values");
+            }
             transaction = session.beginTransaction();
             session.merge(file);
             transaction.commit();
@@ -73,12 +97,12 @@ public class HibernateFileRepositoryImpl implements FileRepository {
     public boolean deleteById(Integer id) {
         Transaction transaction = null;
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            transaction = session.beginTransaction();
             File file = session.get(File.class, id);
             if (file == null) {
                 throw new Exception("ID is not found. Nothing to delete.");
             }
             file.setStatus(Status.DELETED);
+            transaction = session.beginTransaction();
             session.merge(file);
             transaction.commit();
             return true;

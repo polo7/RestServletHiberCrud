@@ -178,7 +178,7 @@ public class FileRestController extends HttpServlet {
             resp.setStatus(400);
         } else {
             Integer id = extractIdFromPath(pathInfo);
-            File fileToDelete = fileService.getById(id);
+            //File fileToDelete = fileService.getById(id);
             if (fileService.deleteById(id)) {
                 responseData = true;
                 resp.setStatus(200);
@@ -194,50 +194,28 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // /api/v1/files/{id}/{new_filename} - updates file by id with
+        // /api/v1/files/ - updates file by processing incoming JSON
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
-        String requestQuery = req.getQueryString();
+        String pathInfo = req.getPathInfo();
 
-        if (requestQuery != null && !requestQuery.isBlank()) {
-            String parameterId = req.getParameter("id");
-            String newFileName = req.getParameter("name");
-            String newFilePath = req.getParameter("path");
-
-            try {
-                Integer id = Integer.valueOf(parameterId);
-                if (newFileName != null && !newFileName.isBlank()
-                        && newFilePath != null && !newFilePath.isBlank()) {
-                    File fileToUpdate = fileService.getById(id);
-                    // What if not found by id? Add new If?
-                    fileToUpdate.setName(newFileName);
-                    fileToUpdate.setFilePath(newFilePath);
-                    File fileUpdated = fileService.update(fileToUpdate);
-
-                    if (fileUpdated != null) {
-                        responseData.add(fileUpdated);
-                        resp.setStatus(200);
-                    } else {
-                        // Something went wrong while updating.
-                        // Our side or wrong ID.
-                        // 4xx or 5xx or add new if?
-                        responseData = null;
-                        resp.setStatus(400);
-                    }
-                } else {
-                    // Query has incorrect file name and/or file path
-                    responseData = null;
-                    resp.setStatus(400);
-                }
-
-            } catch (NumberFormatException e) {
-                // Query has incorrect ID or no ID
+        if (pathInfo == null || "/".equals(pathInfo)) {
+            // PUT /files is the only point to upload JSON with updates
+            File file = new ObjectMapper().readValue(req.getInputStream(), File.class);
+            File updatedFile = fileService.update(file);
+            if (updatedFile != null) {
+                responseData.add(updatedFile);
+                resp.setStatus(200);
+            } else {
+                // Something went wrong while updating.
+                // Our side or wrong ID.
+                // 4xx or 5xx or add new if?
                 responseData = null;
                 resp.setStatus(400);
             }
         } else {
-            // No query - nothing to update
+            // Excessive path/params
             responseData = null;
             resp.setStatus(400);
         }
