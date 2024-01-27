@@ -77,16 +77,92 @@ public class UserRestController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
+        resp.setCharacterEncoding(ENCODING);
+        resp.setContentType(CONTENT_TYPE);
+        List<User> responseData = new ArrayList<>();
+        String pathInfo = req.getPathInfo();
 
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+        if (pathInfo == null || "/".equals(pathInfo)) {
+            // POST /users is the only point to create users
+            User user = new ObjectMapper().readValue(req.getInputStream(), User.class);
+            if (user != null) {
+                user.setId(null);
+                User savedUser = userService.save(user);
+                if (savedUser != null) {
+                    responseData.add(savedUser);
+                    resp.setStatus(201);
+                } else {
+                    // Something went wrong while saving to DB. Our side.
+                    responseData = null;
+                    resp.setStatus(503);
+                }
+            }
+        } else {
+            // Excessive path/params
+            responseData = null;
+            resp.setStatus(400);
+        }
+        String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
+        PrintWriter message = resp.getWriter();
+        message.write(jsonResponse);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+        // /api/v1/user/{id} - set STATUS DELETED for user by ID
+        resp.setCharacterEncoding(ENCODING);
+        resp.setContentType(CONTENT_TYPE);
+        Boolean responseData = false;
+        String pathInfo = req.getPathInfo();
+
+        if (pathInfo != null || "/".equals(pathInfo)) {
+            // No iD in request
+            responseData = null;
+            resp.setStatus(400);
+        } else {
+            Integer id = extractIdFromPath(pathInfo);
+            if (userService.deleteById(id)) {
+                responseData = true;
+                resp.setStatus(200);
+            } else {
+                responseData = false;
+                resp.setStatus(200);
+            }
+        }
+        String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
+        PrintWriter message = resp.getWriter();
+        message.write(jsonResponse);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // /api/v1/users - updates user by processing incoming JSON
+        resp.setCharacterEncoding(ENCODING);
+        resp.setContentType(CONTENT_TYPE);
+        List<User> responseData = new ArrayList<>();
+        String pathInfo = req.getPathInfo();
+
+        if (pathInfo == null || "/".equals(pathInfo)) {
+            // PUT /users is the only point to upload JSON with updates
+            User user = new ObjectMapper().readValue(req.getInputStream(), User.class);
+            User updatedUser = userService.update(user);
+            if (updatedUser != null) {
+                responseData.add(updatedUser);
+                resp.setStatus(200);
+            } else {
+                // Something went wrong while updating.
+                // Our side or wrong ID.
+                // 4xx or 5xx or add new if?
+                responseData = null;
+                resp.setStatus(400);
+            }
+        } else {
+            // Excessive path/params
+            responseData = null;
+            resp.setStatus(400);
+        }
+        String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
+        PrintWriter message = resp.getWriter();
+        message.write(jsonResponse);
     }
 }

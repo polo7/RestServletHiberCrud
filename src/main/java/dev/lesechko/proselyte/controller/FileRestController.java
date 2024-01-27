@@ -97,7 +97,6 @@ public class FileRestController extends HttpServlet {
                 resp.setStatus(400);
             }
         }
-
         String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
         PrintWriter message = resp.getWriter();
         message.write(jsonResponse);
@@ -178,7 +177,6 @@ public class FileRestController extends HttpServlet {
             resp.setStatus(400);
         } else {
             Integer id = extractIdFromPath(pathInfo);
-            //File fileToDelete = fileService.getById(id);
             if (fileService.deleteById(id)) {
                 responseData = true;
                 resp.setStatus(200);
@@ -219,7 +217,6 @@ public class FileRestController extends HttpServlet {
             responseData = null;
             resp.setStatus(400);
         }
-
         String jsonResponse = new ObjectMapper().writeValueAsString(responseData);
         PrintWriter message = resp.getWriter();
         message.write(jsonResponse);

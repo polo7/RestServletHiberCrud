@@ -19,7 +19,7 @@ public class HibernateFileRepositoryImpl implements FileRepository {
         }
     }
 
-    private boolean hasValidVlues(File file) {
+    private boolean hasValidValues(File file) {
         if (file.getName() == null ||  file.getName().isBlank()
             || file.getFilePath() == null || file.getFilePath() == null
             || file.getStatus() == null) {
@@ -55,7 +55,7 @@ public class HibernateFileRepositoryImpl implements FileRepository {
         }
         Transaction transaction = null;
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            if (!hasValidVlues(file)) {
+            if (!hasValidValues(file)) {
                 throw new Exception("Incorrect field values");
             }
             transaction = session.beginTransaction();
@@ -79,7 +79,7 @@ public class HibernateFileRepositoryImpl implements FileRepository {
             if (session.get(File.class, file.getId()) == null) {
                 throw new Exception("ID is not found. Nothing to update");
             }
-            if (!hasValidVlues(file)) {
+            if (!hasValidValues(file)) {
                 throw new Exception("Incorrect field values");
             }
             transaction = session.beginTransaction();

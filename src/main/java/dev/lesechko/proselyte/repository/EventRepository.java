@@ -1,4 +1,6 @@
 package dev.lesechko.proselyte.repository;
 
-public interface EventRepository {
+import dev.lesechko.proselyte.model.Event;
+
+public interface EventRepository extends GenericRepository<Event, Integer> {
 }
