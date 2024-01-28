@@ -8,7 +8,7 @@ import java.io.IOException;
 
 @WebFilter(
         filterName = "AuthFilterController",
-        servletNames = {"FileRestController"}
+        servletNames = {"FileRestController", "EventRestController"}
 //        urlPatterns = {"/api/v1/files/*", "/api/v1/events/*"}
 )
 public class AuthFilterController implements Filter {

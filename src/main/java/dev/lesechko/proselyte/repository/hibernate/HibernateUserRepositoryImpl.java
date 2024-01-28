@@ -1,6 +1,5 @@
 package dev.lesechko.proselyte.repository.hibernate;
 
-import dev.lesechko.proselyte.model.File;
 import dev.lesechko.proselyte.model.Status;
 import dev.lesechko.proselyte.model.User;
 import dev.lesechko.proselyte.repository.UserRepository;
