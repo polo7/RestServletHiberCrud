@@ -17,6 +17,10 @@ public class EventService {
         return eventRepository.getById(id);
     }
 
+    public Event save(Event event) {
+        return eventRepository.save(event);
+    }
+
     public boolean deleteById(Integer id) {
         return eventRepository.deleteById(id);
     }

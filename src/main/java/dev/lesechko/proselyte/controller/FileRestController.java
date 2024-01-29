@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dev.lesechko.proselyte.model.Event;
+import dev.lesechko.proselyte.model.User;
+import dev.lesechko.proselyte.service.EventService;
+import dev.lesechko.proselyte.service.UserService;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 
@@ -48,6 +52,8 @@ public class FileRestController extends HttpServlet {
     private final int FILE_MAX_SIZE = 1_000 * 1024; // file size = 1 Mb
 
     private final FileService fileService = new FileService();
+    private final UserService userService = new UserService();
+    private final EventService eventService = new EventService();
 
     private Integer extractIdFromPath(String pathInfo) {
 //        if (pathInfo == null || pathInfo.isBlank()) {
@@ -143,7 +149,13 @@ public class FileRestController extends HttpServlet {
                     File fileToSave = new File(fileName, FILE_STORAGE_PATH);
                     File fileSaved = fileService.save(fileToSave);
                     if (fileSaved != null) {
-                        //TODO: add event and corresponding stuff
+                        Integer userId = Integer.valueOf(req.getHeader("User-Id"));
+                        User currentUser = userService.getById(userId);
+                        Event currentEvent = new Event(currentUser, fileSaved);
+                        List<Event> eventsForUser = currentUser.getEvents();
+                        eventsForUser.add(currentEvent);
+                        currentUser.setEvents(eventsForUser);
+                        eventService.save(currentEvent);
                         responseData.add(fileSaved);
                         resp.setStatus(201);
                     } else {
