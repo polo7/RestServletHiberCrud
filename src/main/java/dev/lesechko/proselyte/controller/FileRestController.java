@@ -143,6 +143,7 @@ public class FileRestController extends HttpServlet {
                     File fileToSave = new File(fileName, FILE_STORAGE_PATH);
                     File fileSaved = fileService.save(fileToSave);
                     if (fileSaved != null) {
+                        //TODO: add event and corresponding stuff
                         responseData.add(fileSaved);
                         resp.setStatus(201);
                     } else {
