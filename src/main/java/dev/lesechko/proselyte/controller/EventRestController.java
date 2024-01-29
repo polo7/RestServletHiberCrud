@@ -25,16 +25,23 @@ public class EventRestController extends HttpServlet {
     private EventService eventService = new EventService();
 
     private Integer extractIdFromPath(String pathInfo) {
-        if (pathInfo == null || pathInfo.isBlank()) {
-            return null;
-        }
-        String[] pathParams = pathInfo.split("/");
-        if (pathParams.length != 2) {
-            return null;
-        }
+//        if (pathInfo == null || pathInfo.isBlank()) {
+//            return null;
+//        }
+//        String[] pathParams = pathInfo.split("/");
+//        if (pathParams.length != 2) {
+//            return null;
+//        }
+//        try {
+//            return Integer.valueOf(pathParams[1]);
+//        } catch (NumberFormatException e) {
+//            return null;
+//        }
         try {
+            String[] pathParams = pathInfo.split("/");
             return Integer.valueOf(pathParams[1]);
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
