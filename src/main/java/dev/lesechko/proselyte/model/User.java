@@ -7,18 +7,20 @@ import lombok.Setter;
 import java.util.List;
 
 
-@Getter @Setter
 @Entity
 @Table(name = "users")
 public class User {
+    @Getter @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    @Getter @Setter
     @Column(name = "name")
     private String name;
 
+    @Getter @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;

@@ -25,5 +25,7 @@
         </property>
 
         <mapping class="dev.lesechko.proselyte.model.File"/>
+        <mapping class="dev.lesechko.proselyte.model.User"/>
+        <mapping class="dev.lesechko.proselyte.model.Event"/>
     </session-factory>
 </hibernate-configuration>

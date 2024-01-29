@@ -18,8 +18,7 @@ public class HibernateUserRepositoryImpl implements UserRepository {
     }
 
     private boolean hasValidValues(User user) {
-        if (user.getName() == null ||  user.getName().isBlank()
-                || user.getStatus() == null) {
+        if (user.getName() == null ||  user.getName().isBlank() || user.getStatus() == null) {
             return false;
         }
         return true;
