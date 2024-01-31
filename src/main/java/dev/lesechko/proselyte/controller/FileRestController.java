@@ -27,18 +27,20 @@ import dev.lesechko.proselyte.model.File;
 import dev.lesechko.proselyte.service.FileService;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-// GET
-// /api/v1/files - display all files
-// /api/v1/files/{id} - get JSON file by ID
+/*
+    GET
+    http://localhost:8080/api/v1/files - display all files
+    http://localhost:8080/api/v1/files/{id} - get JSON file by ID
 
-// POST
-// /api/v1/files - create new file via POSTing a real file to this endpont
+    POST
+    http://localhost:8080/api/v1/files - create new file via POSTing a real file to this endpont
 
-// DELETE
-// /api/v1/files/{id} - deletes file by id
+    DELETE
+    http://localhost:8080/api/v1/files/{id} - delete file by id
 
-// PUT
-// /api/v1/files?id={id}&name={new_filename}&path={new_filepath} - updates file by id with
+    PUT
+    http://localhost:8080/api/v1/files + JSON - update file using JSON
+*/
 
 @WebServlet(
         name = "FileRestController",
@@ -56,18 +58,6 @@ public class FileRestController extends HttpServlet {
     private final EventService eventService = new EventService();
 
     private Integer extractIdFromPath(String pathInfo) {
-//        if (pathInfo == null || pathInfo.isBlank()) {
-//            return null;
-//        }
-//        String[] pathParams = pathInfo.split("/");
-//        if (pathParams.length != 2) {
-//            return null;
-//        }
-//        try {
-//            return Integer.valueOf(pathParams[1]);
-//        } catch (NumberFormatException e) {
-//            return null;
-//        }
         try {
             String[] pathParams = pathInfo.split("/");
             return Integer.valueOf(pathParams[1]);
@@ -84,8 +74,6 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // /api/v1/file - display all files
-        // /api/v1/file/{id} - get JSON-file by ID
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
@@ -117,7 +105,6 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // /api/v1/files - create new file via POSTing a real file to this endpont
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();
@@ -185,7 +172,6 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // /api/v1/file/{id} - set STATUS DELETED for file by ID
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         Boolean responseData = false;
@@ -212,7 +198,6 @@ public class FileRestController extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // /api/v1/files/ - updates file by processing incoming JSON
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<File> responseData = new ArrayList<>();

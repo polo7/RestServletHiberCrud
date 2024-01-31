@@ -37,7 +37,10 @@ public class HibernateUserRepositoryImpl implements UserRepository {
     @Override
     public User getById(Integer id) {
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            return session.get(User.class, id);
+            return session.createQuery("FROM User u LEFT JOIN FETCH u.events WHERE u.id = :id", User.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            //return session.get(User.class, id);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -15,7 +15,7 @@ public class Event {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY) //TODO: implement LAZY + entities become too nested user-event-user
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
