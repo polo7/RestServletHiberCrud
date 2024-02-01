@@ -5,22 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="574821c1-d37b-4919-bbe4-d69f0139edf9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/DB-Scheme.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/utils/CustomUserSerializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/AuthFilterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/AuthFilterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/EventRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/EventRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/UserRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateEventRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateEventRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateUserRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateUserRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/EventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/EventService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,13 +78,6 @@
       <command value="mvn flyway:migrate" />
       <command value="mvn tomcat9:run" />
     </option>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
