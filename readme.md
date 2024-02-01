@@ -25,6 +25,7 @@
 ### Элементы реализации
 
 **Организация базы данных**
+
 <img alt="DB-Scheme.jpg" height="463" src="DB-Scheme.jpg" width="540"/>
 
 **Организация REST API**
