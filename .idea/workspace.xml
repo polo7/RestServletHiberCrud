@@ -5,10 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="574821c1-d37b-4919-bbe4-d69f0139edf9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/DB-Scheme.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/utils/CustomUserSerializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/AuthFilterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/AuthFilterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/EventRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/EventRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/FileRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/controller/UserRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/File.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateEventRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateEventRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateUserRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/repository/hibernate/HibernateUserRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/EventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/EventService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/lesechko/proselyte/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +38,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -62,6 +77,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="dev.lesechko.proselyte" />
     </key>

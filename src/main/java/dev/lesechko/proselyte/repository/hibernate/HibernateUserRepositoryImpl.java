@@ -1,13 +1,15 @@
 package dev.lesechko.proselyte.repository.hibernate;
 
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import dev.lesechko.proselyte.model.Status;
 import dev.lesechko.proselyte.model.User;
 import dev.lesechko.proselyte.repository.UserRepository;
 import dev.lesechko.proselyte.utils.HibernateConnectionUtils;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import java.util.List;
 
 public class HibernateUserRepositoryImpl implements UserRepository {
     private void rollbackTransaction(Transaction t) {
@@ -27,7 +29,7 @@ public class HibernateUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            return session.createQuery("FROM User", User.class).list();
+            return session.createQuery("FROM User u LEFT JOIN FETCH u.events", User.class).list();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -40,7 +42,6 @@ public class HibernateUserRepositoryImpl implements UserRepository {
             return session.createQuery("FROM User u LEFT JOIN FETCH u.events WHERE u.id = :id", User.class)
                     .setParameter("id", id)
                     .getSingleResult();
-            //return session.get(User.class, id);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

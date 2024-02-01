@@ -14,26 +14,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dev.lesechko.proselyte.model.Event;
 import dev.lesechko.proselyte.model.User;
 import dev.lesechko.proselyte.service.EventService;
 import dev.lesechko.proselyte.service.UserService;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import dev.lesechko.proselyte.model.File;
 import dev.lesechko.proselyte.service.FileService;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 
 /*
     GET
-    http://localhost:8080/api/v1/files - display all files
+    http://localhost:8080/api/v1/files - get JSON displaying all files
     http://localhost:8080/api/v1/files/{id} - get JSON file by ID
 
     POST
-    http://localhost:8080/api/v1/files - create new file via POSTing a real file to this endpont
+    http://localhost:8080/api/v1/files + JSON - create new file via POSTing a real file to this endpont
 
     DELETE
     http://localhost:8080/api/v1/files/{id} - delete file by id

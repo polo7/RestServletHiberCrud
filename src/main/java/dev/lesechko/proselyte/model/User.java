@@ -1,31 +1,36 @@
 package dev.lesechko.proselyte.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
+@Getter @Setter
 @Entity
 @Table(name = "users")
 public class User {
-    @Getter @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Getter @Setter
     @Column(name = "name")
     private String name;
 
-    @Getter @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
 
-    @Getter @Setter
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Event> events;
 

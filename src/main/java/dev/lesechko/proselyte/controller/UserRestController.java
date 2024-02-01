@@ -16,6 +16,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.lesechko.proselyte.model.User;
 import dev.lesechko.proselyte.service.UserService;
 
+/*
+    GET
+    http://localhost:8080/api/v1/users - get JSON with all users
+    http://localhost:8080/api/v1/users/{id} - get JSON-user by ID
+
+    POST
+    http://localhost:8080/api/v1/users + JSON - create new user via POSTing a JSON-user to this endpont
+
+    DELETE
+    http://localhost:8080/api/v1/users/{id} - delete user by id
+
+    PUT
+    http://localhost:8080/api/v1/users + JSON - update user using JSON
+*/
 
 @WebServlet(
         name = "UserRestController",
@@ -28,18 +42,6 @@ public class UserRestController extends HttpServlet {
     private UserService userService = new UserService();
 
     private Integer extractIdFromPath(String pathInfo) {
-//        if (pathInfo == null || pathInfo.isBlank()) {
-//            return null;
-//        }
-//        String[] pathParams = pathInfo.split("/");
-//        if (pathParams.length != 2) {
-//            return null;
-//        }
-//        try {
-//            return Integer.valueOf(pathParams[1]);
-//        } catch (NumberFormatException e) {
-//            return null;
-//        }
         try {
             String[] pathParams = pathInfo.split("/");
             return Integer.valueOf(pathParams[1]);
@@ -122,7 +124,7 @@ public class UserRestController extends HttpServlet {
         Boolean responseData = false;
         String pathInfo = req.getPathInfo();
 
-        if (pathInfo != null || "/".equals(pathInfo)) {
+        if (pathInfo == null || "/".equals(pathInfo)) {
             // No iD in request
             responseData = null;
             resp.setStatus(400);

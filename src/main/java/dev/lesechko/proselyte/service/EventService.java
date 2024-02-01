@@ -1,10 +1,11 @@
 package dev.lesechko.proselyte.service;
 
+import java.util.List;
+
 import dev.lesechko.proselyte.model.Event;
 import dev.lesechko.proselyte.repository.EventRepository;
 import dev.lesechko.proselyte.repository.hibernate.HibernateEventRepositoryImpl;
 
-import java.util.List;
 
 public class EventService {
     private EventRepository eventRepository = new HibernateEventRepositoryImpl();

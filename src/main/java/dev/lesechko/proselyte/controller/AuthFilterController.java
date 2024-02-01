@@ -1,12 +1,14 @@
 package dev.lesechko.proselyte.controller;
 
-import dev.lesechko.proselyte.service.UserService;
+import java.io.IOException;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import dev.lesechko.proselyte.service.UserService;
+
 
 @WebFilter(
         filterName = "AuthFilterController",
@@ -26,7 +28,7 @@ public class AuthFilterController implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        final String AUTH_ERROR_MESSAGE = "Unauthorized access. Check \"User-Name\" header.";
+        final String AUTH_ERROR_MESSAGE = "Unauthorized access. Check \"User-Id\" header.";
 
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;

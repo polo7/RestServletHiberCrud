@@ -1,18 +1,36 @@
 package dev.lesechko.proselyte.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.lesechko.proselyte.model.Event;
-import dev.lesechko.proselyte.service.EventService;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import dev.lesechko.proselyte.model.Event;
+import dev.lesechko.proselyte.service.EventService;
+
+
+/*
+    GET
+    http://localhost:8080/api/v1/events - get JSON displaying all events
+    http://localhost:8080/api/v1/events/{id} - get JSON-event by ID
+
+    POST
+    http://localhost:8080/api/v1/events - not allowed
+
+    DELETE
+    http://localhost:8080/api/v1/events/{id} - delete event by id
+
+    PUT
+    http://localhost:8080/api/v1/events - not allowed
+*/
 
 @WebServlet(
         name = "EventRestController",
@@ -25,18 +43,6 @@ public class EventRestController extends HttpServlet {
     private EventService eventService = new EventService();
 
     private Integer extractIdFromPath(String pathInfo) {
-//        if (pathInfo == null || pathInfo.isBlank()) {
-//            return null;
-//        }
-//        String[] pathParams = pathInfo.split("/");
-//        if (pathParams.length != 2) {
-//            return null;
-//        }
-//        try {
-//            return Integer.valueOf(pathParams[1]);
-//        } catch (NumberFormatException e) {
-//            return null;
-//        }
         try {
             String[] pathParams = pathInfo.split("/");
             return Integer.valueOf(pathParams[1]);
@@ -48,9 +54,6 @@ public class EventRestController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO: implement GET /events + /events/{id}
-        // /api/v1/events - display all events
-        // /api/v1/events/{id} - get JSON-event by ID
         resp.setCharacterEncoding(ENCODING);
         resp.setContentType(CONTENT_TYPE);
         List<Event> responseData = new ArrayList<>();
@@ -102,7 +105,7 @@ public class EventRestController extends HttpServlet {
         Boolean responseData = false;
         String pathInfo = req.getPathInfo();
 
-        if (pathInfo != null || "/".equals(pathInfo)) {
+        if (pathInfo == null || "/".equals(pathInfo)) {
             // No iD in request
             responseData = null;
             resp.setStatus(400);

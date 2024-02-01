@@ -1,10 +1,11 @@
 package dev.lesechko.proselyte.service;
 
+import java.util.List;
+
 import dev.lesechko.proselyte.model.File;
 import dev.lesechko.proselyte.repository.FileRepository;
 import dev.lesechko.proselyte.repository.hibernate.HibernateFileRepositoryImpl;
 
-import java.util.List;
 
 public class FileService {
     private final FileRepository fileRepository = new HibernateFileRepositoryImpl();

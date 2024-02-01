@@ -1,14 +1,16 @@
 package dev.lesechko.proselyte.repository.hibernate;
 
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import dev.lesechko.proselyte.model.Event;
 import dev.lesechko.proselyte.model.Status;
 import dev.lesechko.proselyte.model.User;
 import dev.lesechko.proselyte.repository.EventRepository;
 import dev.lesechko.proselyte.utils.HibernateConnectionUtils;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import java.util.List;
 
 public class HibernateEventRepositoryImpl implements EventRepository {
     private void rollbackTransaction(Transaction t) {
@@ -31,7 +33,7 @@ public class HibernateEventRepositoryImpl implements EventRepository {
     @Override
     public List<Event> getAll() {
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            return session.createQuery("FROM Event", Event.class).list();
+            return session.createQuery("FROM Event e LEFT JOIN FETCH e.user", Event.class).list();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -41,7 +43,9 @@ public class HibernateEventRepositoryImpl implements EventRepository {
     @Override
     public Event getById(Integer id) {
         try (Session session = HibernateConnectionUtils.getNewSession()) {
-            return session.get(Event.class, id);
+            return session.createQuery("FROM Event e LEFT JOIN FETCH e.user WHERE e.id = :id", Event.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
